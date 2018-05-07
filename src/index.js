@@ -7,6 +7,8 @@ import db from './js/db.json';
 
 
 // console.log(data.employees);
+/*
+    здесь будет сортировка (поиск)
 
 const initialState = {
     data: db
@@ -19,7 +21,7 @@ const rootReducer = ( state = initialState, action ) => {
 const store = createStore(rootReducer);
 
 console.log(store.getState());
-
+*/
 class Employee extends Component {
     render() {
         return (

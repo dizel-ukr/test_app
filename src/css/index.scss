@@ -1,0 +1,30 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto',sans-serif;
+}
+.employees {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 750px;
+    list-style: none;
+    margin: 0 auto;
+
+    &__item {
+        width: 45%;
+        padding: 15px 20px;
+        margin-top: 15px;
+        box-sizing: border-box;
+        border: 1px solid #e1e1e1;
+        border-radius: 10px;
+        box-shadow: 0 0 5px rgba(0,0,0,.3);
+
+
+    }
+    &__img-wrapper {
+        text-align: center;
+        padding-bottom: 15px;
+
+    }
+}

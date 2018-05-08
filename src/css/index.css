@@ -6,22 +6,34 @@ body {
 .contacts {
   width: 750px;
   margin: 0 auto;
-  text-align: center; }
+  text-align: center;
+  padding-top: 40px; }
   .contacts__search-wrapper {
     display: flex;
     flex-direction: column;
-    align-items: center; }
-  .contacts__search-title {
-    padding: 10px 0; }
+    align-items: center;
+    max-width: 160px;
+    margin: 0 auto; }
   .contacts__search {
-    border-radius: 3px; }
+    border: 1px solid #e4e4e4;
+    border-radius: 3px;
+    width: 100%;
+    padding: 3px;
+    box-sizing: border-box; }
+  .contacts__button {
+    width: 100%;
+    padding: 5px 0;
+    border: 1px solid #e4e4e4;
+    margin-top: 10px;
+    cursor: pointer; }
 
 .employees {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   width: 100%;
-  list-style: none; }
+  list-style: none;
+  padding: 0; }
   .employees__item {
     width: 45%;
     padding: 15px 20px;

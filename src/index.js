@@ -6,34 +6,80 @@ import './css/index.css';
 import db from './js/db.json';
 
 const initialState = {
-    data: db.employees
+    data: db.employees,
+    order: 1
 };
 
 const ACTION_SEARCH_CONTACT = 'ACTION_SEARCH_CONTACT';
+const ACTION_SORT_CONTACT_BY_FIRST_NAME = 'ACTION_SORT_CONTACT_BY_FIRST_NAME';
+const ACTION_SORT_CONTACT_BY_LAST_NAME = 'ACTION_SORT_CONTACT_BY_LAST_NAME';
 
 const searchContact = (searchQuery) => {
     return {
         type: ACTION_SEARCH_CONTACT,
         payload: searchQuery
     }
-}
+};
+
+const sortContactsByName = () => {
+    return {
+        type: ACTION_SORT_CONTACT_BY_FIRST_NAME,
+        payload: 'first_name'
+    }
+};
+
+const sortContactsByLastName = () => {
+    return {
+        type: ACTION_SORT_CONTACT_BY_LAST_NAME,
+        payload: 'last_name'
+    }
+};
 
 const rootReducer = ( state = initialState, action ) => {
-
-    if (action.payload === undefined){
-        action.payload = '';
-    }
     let displayedContacts = {};
         displayedContacts.data = db.employees;
+        displayedContacts.order = state.order;
 
+    switch (action.type) {
+        case ACTION_SEARCH_CONTACT:
+            if (action.payload === undefined){
+                action.payload = '';
+            }
 
-    let search = action.payload.toLowerCase();
-    displayedContacts.data = db.employees.filter(function (el) {
-        let searchValue = el.first_name.toLowerCase();
-        return searchValue.indexOf(search) !== -1;
-    })
+            let search = action.payload.toLowerCase();
+            displayedContacts.data = db.employees.filter((el) => {
+                let searchValue = el.first_name.toLowerCase();
+                return searchValue.indexOf(search) !== -1;
+            });
+            return state = displayedContacts;
 
-    return displayedContacts;
+        case ACTION_SORT_CONTACT_BY_FIRST_NAME:
+            displayedContacts.order = state.order + 1;
+
+            displayedContacts.data = db.employees.sort((obj1, obj2) => {
+                if (state.order % 2){
+                    return obj1[action.payload] > obj2[action.payload];
+                } else {
+                    return obj1[action.payload] < obj2[action.payload];
+                }
+            });
+            return state = displayedContacts;
+
+        case ACTION_SORT_CONTACT_BY_LAST_NAME:
+            displayedContacts.order = state.order + 1;
+
+            displayedContacts.data = db.employees.sort((obj1, obj2) => {
+                if (state.order % 2){
+                    return obj1[action.payload] > obj2[action.payload];
+                } else {
+                    return obj1[action.payload] < obj2[action.payload];
+                }
+            });
+            return state = displayedContacts;
+
+    }
+
+    return state;
 };
 
 const store = createStore(rootReducer);
@@ -63,12 +109,15 @@ class EmployeesList extends Component {
         return (
             <div className="contacts">
                 <div className="contacts__search-wrapper">
-                    <span className="contacts__search-title">Search by First Name:</span>
-                    <input className="contacts__search" type="text" onChange={(event) => {
+                    <input className="contacts__search" type="text" placeholder="Search by First Name:" onChange={(event) => {
                         dispatch(searchContact(event.target.value));
                     }}/>
-
-                    {/*here will be a sorting */}
+                    <input className="contacts__button" type="button" value="Sort by First name" onClick={() => {
+                        dispatch(sortContactsByName())
+                    }}/>
+                    <input className="contacts__button" type="button" value="Sort by Last name" onClick={() => {
+                        dispatch(sortContactsByLastName())
+                    }}/>
                 </div>
                 <ul className='employees'>
                     {
@@ -92,7 +141,8 @@ class EmployeesList extends Component {
 
 const putStateToProps = (state) => {
     return {
-        data: state.data
+        data: state.data,
+        order: state.order
     }
 };
 

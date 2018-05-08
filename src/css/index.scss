@@ -3,13 +3,29 @@ body {
   padding: 0;
   font-family: 'Roboto',sans-serif;
 }
+.contacts {
+    width: 750px;
+    margin: 0 auto;
+    text-align: center;
+
+    &__search-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    &__search-title {
+        padding: 10px 0;
+    }
+    &__search {
+        border-radius: 3px;
+    }
+}
 .employees {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    width: 750px;
+    width: 100%;
     list-style: none;
-    margin: 0 auto;
 
     &__item {
         width: 45%;

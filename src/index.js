@@ -105,18 +105,18 @@ class EmployeesList extends Component {
     render() {
 
         const dispatch = this.props.dispatch;
-
+        const { searchContact, sortContactsByName, sortContactsByLastName } = this.props;
         return (
             <div className="contacts">
                 <div className="contacts__search-wrapper">
                     <input className="contacts__search" type="text" placeholder="Search by First Name:" onChange={(event) => {
-                        dispatch(searchContact(event.target.value));
+                        searchContact(event.target.value);
                     }}/>
                     <input className="contacts__button" type="button" value="Sort by First name" onClick={() => {
-                        dispatch(sortContactsByName())
+                        sortContactsByName()
                     }}/>
                     <input className="contacts__button" type="button" value="Sort by Last name" onClick={() => {
-                        dispatch(sortContactsByLastName())
+                        sortContactsByLastName()
                     }}/>
                 </div>
                 <ul className='employees'>
@@ -145,8 +145,15 @@ const putStateToProps = (state) => {
         order: state.order
     }
 };
+const putActionToProps = (dispatch) => {
+    return {
+        searchContact: bindActionCreators(searchContact, dispatch),
+        sortContactsByName: bindActionCreators(sortContactsByName, dispatch),
+        sortContactsByLastName: bindActionCreators(sortContactsByLastName, dispatch)
+    }
+}
 
-const WrappedEmployeeList = connect(putStateToProps)(EmployeesList);
+const WrappedEmployeeList = connect(putStateToProps, putActionToProps)(EmployeesList);
 
 ReactDOM.render(
     <Provider store={store}>

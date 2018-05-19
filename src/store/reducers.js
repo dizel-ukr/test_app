@@ -33,10 +33,15 @@ export const rootReducer = ( state = initialState, action ) => {
             displayedContacts.order = state.order + 1;
 
             displayedContacts.data = db.employees.sort((obj1, obj2) => {
+
+                let x = obj1[action.payload].toLowerCase();
+                let y = obj2[action.payload].toLowerCase();
+
                 if (state.order % 2){
-                    return obj1[action.payload] > obj2[action.payload];
+                    // console.log(x)
+                    return ((x < y) ? -1 : ((x > y) ? 1 : 0));
                 } else {
-                    return obj1[action.payload] < obj2[action.payload];
+                    return ((x > y) ? -1 : ((x < y) ? 1 : 0));
                 }
             });
             return state = displayedContacts;
